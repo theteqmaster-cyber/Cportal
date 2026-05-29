@@ -1,4 +1,10 @@
 <?php
+/**
+ * File: ai.php
+ * Description: Implements a server-side AI chatbot integration for the portal using the Groq API (fallback to Mock responses if API key is not configured).
+ * Importance: Empowers students, parents, and teachers with immediate AI-assisted data analysis and query resolutions based on their portal role.
+ */
+
 session_start();
 require_once 'db.php';
 
@@ -171,3 +177,5 @@ if (!empty($groqKey)) {
     }
     echo json_encode(['reply' => $mockReply]);
 }
+
+// Future Improvements: Implement chat session history persistence to allow users to resume conversations.

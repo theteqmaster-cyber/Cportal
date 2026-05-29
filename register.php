@@ -1,4 +1,10 @@
 <?php
+/**
+ * File: register.php
+ * Description: The enrollment application form for new students and their parents. Creates a pending student profile and links it to a new parent account.
+ * Importance: Vital for public user engagement and onboarding new learners into the school ecosystem.
+ */
+
 session_start();
 require_once 'db.php';
 
@@ -73,6 +79,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.classList.add('light-mode');
+    }
+  </script>
 </head>
 <body style="justify-content: center; align-items: center; padding: 40px 20px;">
 
@@ -125,5 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   </div>
 
+  <script src="script.js"></script>
 </body>
+<!-- Future Improvements: Add real-time field validation and email notification alerts for parents upon enrollment status updates. -->
 </html>

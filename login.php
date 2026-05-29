@@ -1,4 +1,10 @@
 <?php
+/**
+ * File: login.php
+ * Description: The authentication page of the portal. Handles secure user sign-in processes and routes users to the dashboard.
+ * Importance: The gatekeeper for security and private credentials verification across all roles.
+ */
+
 session_start();
 require_once 'db.php';
 
@@ -62,12 +68,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.classList.add('light-mode');
+    }
+  </script>
 </head>
 <body style="justify-content: center; align-items: center; padding: 20px;">
 
   <div class="glass-panel" style="width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 20px;">
     <div style="text-align: center;">
-      <div style="width: 50px; height: 50px; background-color: var(--primary); border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; font-weight: bold; font-size: 24px; box-shadow: 0 0 10px var(--primary-glow); margin-bottom: 15px;">C</div>
+      <div style="width: 50px; height: 50px; background-color: var(--primary); border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; font-weight: bold; font-size: 24px; box-shadow: 0 0 10px var(--primary-glow); margin-bottom: 15px; color: #fff;">C</div>
       <h2>cportal Login</h2>
       <p style="color: var(--text-secondary); font-size: 13px; margin-top: 5px;">Enter your credentials to access your dashboard.</p>
     </div>
@@ -96,5 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   </div>
 
+  <script src="script.js"></script>
 </body>
+<!-- Future Improvements: Add protection against brute-force attacks (e.g. rate limiting or CAPTCHA) and support multi-factor authentication. -->
 </html>

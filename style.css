@@ -1,4 +1,8 @@
-/* cportal - Premium Dark Design System */
+/* 
+ * File: style.css
+ * Description: The primary stylesheet defining the layout, responsiveness, animations, color system variables, and dark/light modes.
+ * Importance: Drives the premium visual presentation, design tokens, and user experience consistency across all portal screens.
+ */
 :root {
   --bg-primary: #0b0f19;
   --bg-secondary: #131a26;
@@ -32,6 +36,56 @@
   --shadow-lg: 0 16px 40px -6px rgba(0, 0, 0, 0.7);
   
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Theme-specific custom properties */
+  --gradient-text-start: #f8fafc;
+  --gradient-text-end: #6366f1;
+  --header-bg: rgba(19, 26, 38, 0.85);
+  --footer-bg: rgba(19, 26, 38, 0.9);
+  --header-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  --nav-drawer-bg: rgba(11, 15, 25, 0.96);
+  --link-hover: #fff;
+  --bg-inline-tint: rgba(255, 255, 255, 0.05);
+  --bg-inline-tint-subtle: rgba(255, 255, 255, 0.02);
+}
+
+:root.light-mode {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-input: #f1f5f9;
+  
+  --primary: #4f46e5;
+  --primary-hover: #3b31d1;
+  --primary-glow: rgba(79, 70, 229, 0.15);
+  
+  --accent: #b45309;
+  --accent-glow: rgba(180, 83, 9, 0.1);
+  
+  --success: #059669;
+  --success-glow: rgba(5, 150, 105, 0.1);
+  --error: #dc2626;
+  --error-glow: rgba(220, 38, 38, 0.1);
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-focus: rgba(79, 70, 229, 0.5);
+  
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 16px 40px -6px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+
+  --gradient-text-start: #0f172a;
+  --gradient-text-end: #4f46e5;
+  --header-bg: rgba(255, 255, 255, 0.85);
+  --footer-bg: rgba(248, 250, 252, 0.9);
+  --header-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --nav-drawer-bg: rgba(255, 255, 255, 0.96);
+  --link-hover: #1e1b4b;
+  --bg-inline-tint: rgba(0, 0, 0, 0.05);
+  --bg-inline-tint-subtle: rgba(0, 0, 0, 0.02);
 }
 
 * {
@@ -57,14 +111,14 @@ body {
 /* Header & Footer Layouts */
 header {
   width: 100%;
-  background: rgba(19, 26, 38, 0.85);
+  background: var(--header-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--header-shadow);
 }
 
 .header-container {
@@ -90,7 +144,7 @@ main {
 
 footer {
   width: 100%;
-  background: rgba(19, 26, 38, 0.9);
+  background: var(--footer-bg);
   border-top: 1px solid var(--border-color);
   padding: 25px 20px;
   margin-top: auto; /* Pushes footer to the bottom of viewport */
@@ -136,7 +190,7 @@ a {
 }
 
 a:hover {
-  color: #fff;
+  color: var(--link-hover);
 }
 
 /* Buttons */
@@ -440,3 +494,257 @@ tr:hover td {
   align-items: center;
   justify-content: center;
 }
+
+/* Hamburger Menu Button */
+.menu-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 200;
+  outline: none;
+  padding: 0;
+}
+
+.menu-btn span {
+  width: 100%;
+  height: 2.5px;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+/* Transform to X when active */
+.menu-btn.active span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+.menu-btn.active span:nth-child(2) {
+  opacity: 0;
+}
+.menu-btn.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Slide-out Navigation Drawer */
+.nav-menu {
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 300px;
+  height: 100vh;
+  background: var(--nav-drawer-bg);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-left: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  padding: 90px 25px 40px 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 150;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-menu.open {
+  transform: translateX(-320px);
+}
+
+.nav-menu a {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: var(--transition);
+}
+
+.nav-menu a:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-inline-tint);
+  transform: translateX(4px);
+}
+
+.nav-menu hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 10px 0;
+}
+
+/* Card Navigation Styles */
+.card-nav {
+  transition: var(--transition);
+}
+
+.card-nav:hover {
+  transform: translateY(-4px) !important;
+  border-color: var(--primary-hover) !important;
+  box-shadow: 0 8px 24px var(--primary-glow) !important;
+}
+
+.card-nav.active {
+  border-color: var(--primary) !important;
+  background: rgba(79, 70, 229, 0.08) !important;
+  box-shadow: 0 0 15px var(--primary-glow) !important;
+  transform: scale(1.02) !important;
+}
+
+/* Confirm Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  width: 90%;
+  max-width: 450px;
+  padding: 30px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+/* Theme Toggle Button Style */
+.theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  transition: var(--transition);
+  outline: none;
+  padding: 0;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--primary-hover);
+  transform: scale(1.05);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle-btn .sun-icon {
+  display: block;
+}
+
+.theme-toggle-btn .moon-icon {
+  display: none;
+}
+
+.light-mode .theme-toggle-btn .sun-icon {
+  display: none;
+}
+
+.light-mode .theme-toggle-btn .moon-icon {
+  display: block;
+}
+
+/* Light Mode Overrides for general UI */
+.light-mode body {
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.04) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(217, 119, 6, 0.02) 0px, transparent 50%);
+}
+
+.light-mode .theme-toggle-btn {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .theme-toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: var(--primary);
+}
+
+.light-mode .btn-outline:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.light-mode .nav-menu a:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.light-mode td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.light-mode tr:hover td {
+  background-color: rgba(0, 0, 0, 0.01);
+}
+
+.light-mode .glass-panel:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-lg), 0 0 15px rgba(79, 70, 229, 0.03);
+}
+
+.light-mode .alert-error {
+  color: #991b1b;
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.light-mode .alert-success {
+  color: #065f46;
+  background-color: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.light-mode .ai-panel {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Intercepting hardcoded inline background colors in PHP files */
+.light-mode [style*="rgba(255, 255, 255, 0.05)"],
+.light-mode [style*="rgba(255,255,255,0.05)"] {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.light-mode [style*="rgba(255, 255, 255, 0.03)"],
+.light-mode [style*="rgba(255,255,255,0.03)"] {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+.light-mode [style*="rgba(255, 255, 255, 0.02)"],
+.light-mode [style*="rgba(255,255,255,0.02)"] {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+}
+
+/* Future Improvements: Introduce CSS nesting once standard browser compatibility increases, and extract component styles into a utility-first methodology if complexity scales. */

@@ -1,4 +1,10 @@
 <?php
+/**
+ * File: index.php
+ * Description: The public landing page of the portal. Features school vision/mission, dynamic events calendar, enrollment applications link, and the AI chatbot helper.
+ * Importance: Functions as the entry point and public face of the Tswayi High School portal.
+ */
+
 session_start();
 require_once 'db.php';
 
@@ -21,18 +27,29 @@ try {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.classList.add('light-mode');
+    }
+  </script>
 </head>
 <body>
 
   <!-- Navigation Header -->
   <header>
     <div class="header-container">
-      <div style="display: flex; align-items: center; gap: 10px;" onclick="window.location.href='index.php'" style="cursor: pointer;">
-        <div style="width: 40px; height: 40px; background-color: var(--primary); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 20px; box-shadow: 0 0 10px var(--primary-glow)">C</div>
-        <div style="margin-left: 10px;">
-          <h2 style="font-size: 18px; line-height: 1.1;">cportal</h2>
-          <span style="font-size: 12px; color: var(--text-secondary);">Tswayi High School</span>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <div style="display: flex; align-items: center; gap: 10px; cursor: pointer;" onclick="window.location.href='index.php'">
+          <div style="width: 40px; height: 40px; background-color: var(--primary); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 20px; box-shadow: 0 0 10px var(--primary-glow); color: #fff;">C</div>
+          <div style="margin-left: 10px;">
+            <h2 style="font-size: 18px; line-height: 1.1;">cportal</h2>
+            <span style="font-size: 12px; color: var(--text-secondary);">Tswayi High School</span>
+          </div>
         </div>
+        <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
       </div>
       <nav style="display: flex; gap: 15px; align-items: center;">
         <?php if (isset($_SESSION['user'])): ?>
@@ -53,7 +70,7 @@ try {
   <main>
     <!-- Hero Banner -->
     <section class="glass-panel" style="padding: 60px 40px; display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center; background: radial-gradient(ellipse at center, rgba(79, 70, 229, 0.15) 0%, rgba(11, 15, 25, 0) 70%); border-radius: var(--radius-lg);">
-      <h1 style="font-size: 42px; font-weight: 800; line-height: 1.2; background: linear-gradient(to right, #f8fafc, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      <h1 style="font-size: 42px; font-weight: 800; line-height: 1.2; background: linear-gradient(to right, var(--gradient-text-start), var(--gradient-text-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
         Technology for Quality Education
       </h1>
       <p style="max-width: 600px; font-size: 18px; color: var(--text-secondary); line-height: 1.6;">
@@ -85,7 +102,7 @@ try {
         <div style="width: 40px; height: 40px; background-color: rgba(16, 185, 129, 0.1); color: var(--success); display: flex; justify-content: center; align-items: center; border-radius: 8px; font-weight: bold; font-size: 20px;">📚</div>
         <h3>Academic Subjects</h3>
         <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.6;">
-          Our curriculum covers core secondary modules including **Mathematics**, **Computer Science**, **Biology**, and **English Language**, paired with interactive AI tutoring.
+          Our curriculum covers core secondary modules including Mathematics, Computer Science, Biology, and English Language, paired with interactive AI tutoring.
         </p>
       </div>
     </section>
@@ -133,7 +150,7 @@ try {
           <span style="width: 8px; height: 8px; background-color: var(--success); border-radius: 50%; display: inline-block;"></span>
           cportal AI Assistant
         </h3>
-        <span style="font-size: 10px; color: var(--text-secondary);">Powered by Groq Cloud APIs</span>
+        <span style="font-size: 10px; color: var(--text-secondary);">Powered by IT Help Desk</span>
       </div>
       <button onclick="toggleAiChat()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 18px;">✕</button>
     </div>
@@ -204,6 +221,8 @@ try {
       scrollToBottom();
     }
   </script>
+  <script src="script.js"></script>
 
 </body>
+<!-- Future Improvements: Optimize landing page performance by lazy-loading heavy background assets and implementing content caching. -->
 </html>

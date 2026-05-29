@@ -1,4 +1,10 @@
 <?php
+/**
+ * File: db.php
+ * Description: Establishes a secure database connection using PDO.
+ * Importance: Essential for all database-driven operations in the portal.
+ */
+
 $host = '127.0.0.1';
 $db   = 'project_db';
 $user = 'php_dev';
@@ -19,4 +25,6 @@ try {
      error_log("Database connection failed: " . $e->getMessage());
      die("Database connection failed. Please check back later.");
 }
+
+// Future Improvements: Migrate database credentials to environment variables (.env) for enhanced security.
 ?>

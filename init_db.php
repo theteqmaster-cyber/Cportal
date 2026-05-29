@@ -1,4 +1,10 @@
 <?php
+/**
+ * File: init_db.php
+ * Description: Sets up the database schema, creates all required tables (users, classes, students, teachers, grades, events, audit logs, help tickets), and seeds default portal users and sample records.
+ * Importance: Necessary for initial database installation and configuration setup.
+ */
+
 require_once 'db.php';
 
 try {
@@ -90,8 +96,9 @@ try {
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS help_tickets (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            user_id INT NOT NULL,
+            user_id INT NULL,
             message TEXT NOT NULL,
+            guest_contact VARCHAR(100) NULL,
             status ENUM('open', 'resolved', 'escalated') NOT NULL DEFAULT 'open',
             response TEXT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -198,3 +205,5 @@ try {
 } catch (PDOException $e) {
     die("Database initialization failed: " . $e->getMessage() . "\n");
 }
+
+// Future Improvements: Implement modular migration support and add indexes to foreign keys to optimize query performance.
